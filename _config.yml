@@ -41,6 +41,8 @@ minima:
   social_links:
     twitter: MarcioMinicz
     github: minicz
+    gitlab: minicz
+    researchgate: Marcio_Minicz
 
 # Set this to true to get LaTeX math equation support
 use_math: true
