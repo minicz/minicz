@@ -1,1 +1,1 @@
-Sitemap: https://minicz.github.io//blog/sitemap.xml
+Sitemap: https://minicz.github.io//minicz/sitemap.xml
