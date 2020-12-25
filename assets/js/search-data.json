@@ -3,7 +3,7 @@
     
         "post0": {
             "title": "An Example Markdown Post",
-            "content": "Example Markdown Post . Basic setup . Jekyll requires blog post files to be named according to the following format: . More Test . Test Again .",
+            "content": "Example Markdown Post . Basic setup . Jekyll requires blog post files to be named according to the following format: . More Test . Test Again . More .",
             "url": "https://minicz.github.io//markdown/2020/12/25/teste.html",
             "relUrl": "/markdown/2020/12/25/teste.html",
             "date": " • Dec 25, 2020"
