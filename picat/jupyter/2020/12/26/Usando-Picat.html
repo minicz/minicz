@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Usando Picat | Engenheirando</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Usando Picat" />
+<meta name="author" content="Marcio Minicz" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Usando Jupyter Notebook com Picat em um post" />
+<meta property="og:description" content="Usando Jupyter Notebook com Picat em um post" />
+<link rel="canonical" href="https://minicz.github.io//minicz/picat/jupyter/2020/12/26/Usando-Picat.html" />
+<meta property="og:url" content="https://minicz.github.io//minicz/picat/jupyter/2020/12/26/Usando-Picat.html" />
+<meta property="og:site_name" content="Engenheirando" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-12-26T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://minicz.github.io//minicz/picat/jupyter/2020/12/26/Usando-Picat.html","@type":"BlogPosting","headline":"Usando Picat","dateModified":"2020-12-26T00:00:00-06:00","datePublished":"2020-12-26T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://minicz.github.io//minicz/picat/jupyter/2020/12/26/Usando-Picat.html"},"author":{"@type":"Person","name":"Marcio Minicz"},"description":"Usando Jupyter Notebook com Picat em um post","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/minicz/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://minicz.github.io//minicz/feed.xml" title="Engenheirando" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-102494013-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/minicz/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/minicz/">Engenheirando</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/minicz/about/">About Me</a><a class="page-link" href="/minicz/search/">Search</a><a class="page-link" href="/minicz/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Usando Picat</h1><p class="page-description">Usando Jupyter Notebook com Picat em um post</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-12-26T00:00:00-06:00" itemprop="datePublished">
+        Dec 26, 2020
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Marcio Minicz</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/minicz/categories/#picat">picat</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/minicz/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/minicz/minicz/tree/master/_notebooks/2020-12-26-Usando-Picat.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/minicz/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/minicz/minicz/master?filepath=_notebooks%2F2020-12-26-Usando-Picat.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/minicz/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/minicz/minicz/blob/master/_notebooks/2020-12-26-Usando-Picat.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/minicz/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Loding-Picat-Extension">Loding Picat Extension </a></li>
+<li class="toc-entry toc-h1"><a href="#Executing-a-small-program">Executing a small program </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-12-26-Usando-Picat.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Loding-Picat-Extension">
+<a class="anchor" href="#Loding-Picat-Extension" aria-hidden="true"><span class="octicon octicon-link"></span></a>Loding Picat Extension<a class="anchor-link" href="#Loding-Picat-Extension"> </a>
+</h1>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> ipicat
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The ipicat extension is already loaded. To reload it, use:
+  %reload_ext ipicat
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Executing-a-small-program">
+<a class="anchor" href="#Executing-a-small-program" aria-hidden="true"><span class="octicon octicon-link"></span></a>Executing a small program<a class="anchor-link" href="#Executing-a-small-program"> </a>
+</h1>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">picat</span>
+
+main =&gt;
+  X is mod( -( 2 * 3**4), 5),
+  Y is mod(  (-2 * 3**4), 5),
+  println(X),
+  println(Y).
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>3
+-2
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">picat</span>
+
+/*
+
+  Perfect square placement in Picat.
+
+  See CSPLib for description of the problem:
+  http://www.cs.st-andrews.ac.uk/~ianm/CSPLib/prob/prob009/index.html
+
+  """
+  The perfect square placement problem (also called the squared square problem) 
+  is to pack a set of squares with given integer sizes into a bigger square in 
+  such a way that no squares overlap each other and all square borders are 
+  parallel to the border of the big square. For a perfect placement problem, 
+  all squares have different sizes. The sum of the square surfaces is equal 
+  to the surface of the packing square, so that there is no spare capacity. 
+  A simple perfect square placement problem is a perfect square placement 
+  problem in which no subset of the squares (greater than one) are placed 
+  in a rectangle. 
+  """
+
+  The problems files from CSPLib
+  http://www.cs.st-andrews.ac.uk/~ianm/CSPLib/prob/prob009/results
+  are places here
+  http://www.hakank.org/minizinc/perfect_square_placement/
+
+
+  Note: this model use just diffn/4 and cumulative/4 and don't 
+  (necessary) conform to the constraint given above that
+    "all square borders are parallel to the border of the big square"
+  
+
+  Model created by Hakan Kjellerstrand, hakank@gmail.com
+  See also my Picat page: http://www.hakank.org/picat/
+
+*/
+
+import cp.
+
+main =&gt; go.
+
+go ?=&gt;
+   time2(perfect_square(ffd, split)),
+   % time2(perfect_square(ffc, split)),
+   % fail,
+   nl.
+
+go =&gt; true.
+
+go2 =&gt;
+   selection(VariableSelection),
+   choice(ValueSelection),
+   Timeout = 10000,
+   Success = [],
+   Fails = [],
+   foreach(Var in VariableSelection, Val in ValueSelection) 
+       writeln([Var,Val]),
+       time_out(time2($perfect_square(Var, Val)), Timeout, Result),
+       writeln(Result),
+       if Result == success then
+          Success := Success ++ [[Var,Val]]
+       end,
+       if Result == time_out then
+          Fails := Fails ++ [[Var, Val]]
+       end
+   end,
+   writeln(success=Success),
+   writeln(fails=Fails),
+   nl.
+
+perfect_square(Var, Val) =&gt;
+   % N = 6,
+   % A =   [1,1,1,1,1,2,3,3,3],
+
+
+   % Problem from 
+   % http://www.maa.org/editorial/mathgames/mathgames_12_01_03.html
+   N = 14, % size of main square
+   A = [1,1,1,1,2,3,3,3,5,6,6,8], % Sizes
+
+   % Problem 1 from 
+   % http://www.cs.st-andrews.ac.uk/~ianm/CSPLib/prob/prob009/results
+   % N = 112, % size of main square
+   % A = [2,4,6,7,8,9,11,15,16,17,18,19,24,25,27,29,33,35,37,42,50],
+
+   % From Mathematica Tech Conference 2018:
+   % http://www.wolfram.com/broadcast/video.php?c=452&amp;p=3&amp;v=2434
+   % Nope, no solution
+   % N = 36+32,  %size of main square
+   % squares and double squares
+   % A = [1,2,4,8,9,16,18,26,32,36,49],
+
+   Size = length(A),
+
+   X = new_list(Size),
+   X :: 1..N,
+
+   Y = new_list(Size),
+   Y :: 1..N,
+
+   % constraints
+
+   cumulative(X,A,A,N),
+   cumulative(Y,A,A,N),
+
+   diffn([X ++ A, Y ++ A]), 
+   % diffn_me(X,Y,A,A),
+   % diffn_nonstrict(X,Y,A,A),     
+
+   foreach(I in 1..Size)
+     X[I] + A[I] #=&lt; N+1,
+     Y[I] + A[I] #=&lt; N+1
+   end,
+
+   % println(x=X),
+   % println(y=Y),
+
+   Vars = X ++ Y,
+   println(solve),
+   solve([Var, Val], Vars),
+
+   println(a=A),
+   println(x=X),
+   println(y=Y),
+
+   nl.
+
+
+% Variable selection
+selection(Variable) =&gt; 
+  Variable = [backward,constr,degree,ff,ffc,forward,inout,leftmost,max,min,rand_var].
+
+% Value selection
+choice(Value) =&gt; 
+  Value = [down,updown,split,reverse_split,rand_val,up].
+
+/*
+From MiniZinc's diffn_nonstrict/4
+*/
+
+diffn_nonstrict(X,Y,DX,DY) =&gt;
+  N = X.len,
+  foreach(I in 1..N, J in I+1..N)
+    DX[I] #= 0 #\/
+    DX[J] #= 0 #\/
+    DY[I] #= 0 #\/
+    DY[J] #= 0 #\/
+    X[I] + DX[I] #=&lt; X[J] #\/
+    Y[I] + DY[I] #=&lt; Y[J] #\/
+    X[J] + DX[J] #=&lt; X[I] #\/
+    Y[J] + DY[J] #=&lt; Y[I]
+  end.
+
+/*
+From MiniZinc's diffn/4
+*/
+diffn_me(X,Y,DX,DY) =&gt;
+  N = X.len,
+  foreach(I in 1..N, J in I+1..N) 
+    X[I] + DX[I] #&lt;= X[J] #\/
+    Y[I] + DY[I] #&lt;= Y[J]  #\/
+    X[J] + DX[J] #&lt;= X[I] #\/
+    Y[J] + DY[J] #&lt;= Y[I]
+  end.
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>solve
+a = [1,1,1,1,2,3,3,3,5,6,6,8]
+x = [14,8,14,7,12,12,12,9,7,9,1,1]
+y = [14,14,8,7,12,12,12,9,7,9,1,1]
+
+
+CPU time 0.024 seconds. Backtracks: 0
+
+
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><a class="u-url" href="/minicz/picat/jupyter/2020/12/26/Usando-Picat.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/minicz/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/minicz/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/minicz/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Minicz Blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/minicz" title="minicz"><svg class="svg-icon grey"><use xlink:href="/minicz/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/MarcioMinicz" title="MarcioMinicz"><svg class="svg-icon grey"><use xlink:href="/minicz/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
